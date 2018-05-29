@@ -58,3 +58,4 @@ def reset_to_host_mode():
 	os.system('pkill -f "/usr/lib/raspiwifi/reset_device/connection_monitor.py"')
 	os.system('systemctl daemon-reload')
 	os.system('systemctl restart dhcpcd')
+	os.system('/etc/cron.raspiwifi/apclient_bootstrapper')
