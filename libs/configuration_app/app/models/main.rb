@@ -54,7 +54,8 @@ class Main < ActiveRecord::Base
 		system('systemctl restart dnsmasq')
 		system('pkill -f "hostapd -dd /etc/hostapd/hostapd.conf"')
 		system('pkill -f "/usr/lib/raspiwifi/reset_device/reset.py"')
-		system('systemctl restart networking')
+		system('systemctl daemon-reload')
+		system('systemctl restart dhcpcd')
 		system('/etc/cron.raspiwifi/apclient_bootstrapper')
   end
 
