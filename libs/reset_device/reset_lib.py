@@ -52,4 +52,9 @@ def reset_to_host_mode():
 	os.system('mv /etc/dnsmasq.conf /etc/dnsmasq.conf.original')
 	os.system('cp /usr/lib/raspiwifi/reset_device/static_files/dnsmasq.conf /etc/')
 	os.system('cp /usr/lib/raspiwifi/reset_device/static_files/dhcpcd.conf /etc/')
-	os.system('reboot')
+
+	os.system('systemctl restart dnsmasq')
+	os.system('pkill -f "/usr/lib/raspiwifi/reset_device/reset.py"')
+	os.system('pkill -f "/usr/lib/raspiwifi/reset_device/connection_monitor.py"')
+	os.system('systemctl daemon-reload')
+	os.system('systemctl restart dhcpcd')
