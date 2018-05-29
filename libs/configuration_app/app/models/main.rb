@@ -1,7 +1,7 @@
 class Main < ActiveRecord::Base
 
 	def self.scan_wifi_networks
-    ap_list = %x{iwlist scan}.split('Cell')
+    ap_list = %x{sudo iwlist scan}.split('Cell')
     ap_array = Array.new
 
     ap_list.each{|ap_grouping|
@@ -40,23 +40,23 @@ class Main < ActiveRecord::Base
 
 		temp_conf_file.close
 
-		system('cp ../tmp/wpa_supplicant.conf.tmp /etc/wpa_supplicant/wpa_supplicant.conf')
+		system('sudo cp ../tmp/wpa_supplicant.conf.tmp /etc/wpa_supplicant/wpa_supplicant.conf')
 		system('rm ../tmp/wpa_supplicant.conf.tmp')
 	end
 
   def self.set_ap_client_mode
-    system ('rm /etc/cron.raspiwifi/aphost_bootstrapper')
-    system ('cp /usr/lib/raspiwifi/reset_device/static_files/apclient_bootstrapper /etc/cron.raspiwifi/')
-		system ('chmod +x /etc/cron.raspiwifi/apclient_bootstrapper')
-    system ('mv /etc/dnsmasq.conf.original /etc/dnsmasq.conf')
-    system ('mv /etc/dhcpcd.conf.original /etc/dhcpcd.conf')
+    system ('sudo rm /etc/cron.raspiwifi/aphost_bootstrapper')
+    system ('sudo cp /usr/lib/raspiwifi/reset_device/static_files/apclient_bootstrapper /etc/cron.raspiwifi/')
+		system ('sudo chmod +x /etc/cron.raspiwifi/apclient_bootstrapper')
+    system ('sudo mv /etc/dnsmasq.conf.original /etc/dnsmasq.conf')
+    system ('sudo mv /etc/dhcpcd.conf.original /etc/dhcpcd.conf')
 
-		system('systemctl restart dnsmasq')
-		system('pkill -f "hostapd -dd /etc/hostapd/hostapd.conf"')
-		system('pkill -f "/usr/lib/raspiwifi/reset_device/reset.py"')
-		system('systemctl daemon-reload')
-		system('systemctl restart dhcpcd')
-		system('/etc/cron.raspiwifi/apclient_bootstrapper')
+		system('sudo systemctl restart dnsmasq')
+		system('sudo pkill -f "hostapd -dd /etc/hostapd/hostapd.conf"')
+		system('sudo pkill -f "/usr/lib/raspiwifi/reset_device/reset.py"')
+		system('sudo systemctl daemon-reload')
+		system('sudo systemctl restart dhcpcd')
+		system('sudo /etc/cron.raspiwifi/apclient_bootstrapper')
   end
 
 end
