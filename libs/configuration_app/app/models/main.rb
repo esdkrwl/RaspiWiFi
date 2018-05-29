@@ -50,8 +50,12 @@ class Main < ActiveRecord::Base
 		system ('chmod +x /etc/cron.raspiwifi/apclient_bootstrapper')
     system ('mv /etc/dnsmasq.conf.original /etc/dnsmasq.conf')
     system ('mv /etc/dhcpcd.conf.original /etc/dhcpcd.conf')
-    system ('cp /usr/lib/raspiwifi/reset_device/static_files/isc-dhcp-server.apclient /etc/default/isc-dhcp-server')
-    system ('reboot')
+
+		system('systemctl restart dnsmasq')
+		system('pkill -f "hostapd -dd /etc/hostapd/hostapd.conf"')
+		system('pkill -f "/usr/lib/raspiwifi/reset_device/reset.py"')
+		system('systemctl restart networking')
+		system('/etc/cron.raspiwifi/aplcient_bootstrapper')
   end
 
 end
