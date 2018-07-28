@@ -51,7 +51,10 @@ def create_wpa_supplicant(ssid, wifi_key):
 
     temp_conf_file.write('ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev\n')
     temp_conf_file.write('update_config=1\n')
+    temp_conf_file.write('country=DE\n')
+
     temp_conf_file.write('\n')
+    
     temp_conf_file.write('network={\n')
     temp_conf_file.write('	ssid="' + ssid + '"\n')
 
@@ -59,7 +62,7 @@ def create_wpa_supplicant(ssid, wifi_key):
         temp_conf_file.write('	key_mgmt=NONE\n')
     else:
         temp_conf_file.write('	psk="' + wifi_key + '"\n')
-
+        temp_conf_file.write('key_mgmt=WPA-PSK\n')
     temp_conf_file.write('	}')
 
     temp_conf_file.close
